@@ -1,4 +1,4 @@
-package com.mesum.galleryapp
+package com.mesum.galleryapp.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
