@@ -22,7 +22,7 @@ class AlbumsViewModel @Inject constructor(private val application: Application,p
         loadAlbums()
     }
 
-    private fun loadAlbums() {
+     fun loadAlbums() {
         viewModelScope.launch {
             val albumList = getAlbumsUseCase.invoke(application.applicationContext)
             _albums.value = albumList

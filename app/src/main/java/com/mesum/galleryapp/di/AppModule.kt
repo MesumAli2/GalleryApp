@@ -19,7 +19,6 @@ object AppModule {
         return AlbumRepositoryImpl()
     }
 
-    // Provide other dependencies
 
     @Singleton
     @Provides
