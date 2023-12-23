@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.mesum.galleryapp.data.MediaItem
 import com.mesum.galleryapp.databinding.ItemMediaBinding
 
-class MediaAdapter(private val mediaList: List<MediaItem>) : RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
+class MediaAdapter() : RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
 
+    private var mediaList: List<MediaItem> = emptyList()
     class MediaViewHolder(val binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(mediaItem: MediaItem) {
             // Assuming MediaItem has a Uri or path for the image
@@ -31,6 +33,9 @@ class MediaAdapter(private val mediaList: List<MediaItem>) : RecyclerView.Adapte
     }
 
     override fun getItemCount() = mediaList.size
+    fun setItems(photos: List<MediaItem>) {
+        mediaList = photos
+        notifyDataSetChanged()
+    }
 }
 
-data class MediaItem(val uri: Uri) // Define your MediaItem class based on your data model

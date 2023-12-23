@@ -43,9 +43,10 @@ class AlbumRepositoryImpl : AlbumRepository {
             }
         }
 
-        albumMap.values.forEach { (name, firstImageUri, count) ->
-            albums.add(Album(name, firstImageUri, count))
+        albumMap.forEach { (albumId ,albumInfo) ->
+            albums.add(Album(id = albumId,albumInfo.first, albumInfo.second, albumInfo.third))
         }
+
 
         return albums
     }

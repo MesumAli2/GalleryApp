@@ -36,7 +36,7 @@ class AlbumAdapter(private val albumClickListener: (String) -> Unit) : ListAdapt
             holder.binding.imageViewAlbum.setImageResource(R.drawable.ic_launcher_background)
         }
         holder.itemView.setOnClickListener {
-            albumClickListener(album.name)
+            albumClickListener(album.id)
         }
 
     }
