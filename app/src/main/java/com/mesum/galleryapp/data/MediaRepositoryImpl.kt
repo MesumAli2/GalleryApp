@@ -12,7 +12,7 @@ class MediaRepositoryImpl(private val context: Context) : MediaRepository {
         val projection = arrayOf(
             MediaStore.Images.Media._ID,
             MediaStore.Images.Media.DISPLAY_NAME
-            // Add more columns as needed
+            // You can add DATE_ADDED or DATE_TAKEN if you want to use them in your logic
         )
 
         // Define the selection criteria (filter)
@@ -24,12 +24,15 @@ class MediaRepositoryImpl(private val context: Context) : MediaRepository {
         // Query URI for images
         val queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
+        // Adding sort order - Newest first based on DATE_ADDED
+        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
+
         context.contentResolver.query(
             queryUri,
             projection,
             selection,
             selectionArgs,
-            null // Add sort order if needed
+            sortOrder
         )?.use { cursor ->
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
             val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
@@ -48,5 +51,6 @@ class MediaRepositoryImpl(private val context: Context) : MediaRepository {
         return mediaList
     }
 }
+
 
 

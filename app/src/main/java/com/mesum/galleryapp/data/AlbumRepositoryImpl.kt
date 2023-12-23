@@ -38,15 +38,15 @@ class AlbumRepositoryImpl : AlbumRepository {
                     albumMap[albumId] = Triple(albumName, imageUri, 1)
                 } else {
                     val newCount = albumInfo.third + 1
-                    albumMap[albumId] = Triple(albumName, albumInfo.second ?: imageUri, newCount)
+                    // Always update the imageUri to the latest one
+                    albumMap[albumId] = Triple(albumName, imageUri, newCount)
                 }
             }
         }
 
         albumMap.forEach { (albumId ,albumInfo) ->
-            albums.add(Album(id = albumId,albumInfo.first, albumInfo.second, albumInfo.third))
+            albums.add(Album(id = albumId, name = albumInfo.first, firstImageUri = albumInfo.second, mediaCount = albumInfo.third))
         }
-
 
         return albums
     }
