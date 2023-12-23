@@ -2,6 +2,7 @@ package com.mesum.galleryapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.mesum.galleryapp.data.Album
 import com.mesum.galleryapp.databinding.ItemAlbumBinding
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.mesum.galleryapp.R
 
-class AlbumAdapter : ListAdapter<Album, AlbumAdapter.AlbumViewHolder>(AlbumDiffCallback()) {
+class AlbumAdapter(private val albumClickListener: (String) -> Unit) : ListAdapter<Album, AlbumAdapter.AlbumViewHolder>(AlbumDiffCallback()) {
 
     class AlbumViewHolder(val binding: ItemAlbumBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,6 +34,9 @@ class AlbumAdapter : ListAdapter<Album, AlbumAdapter.AlbumViewHolder>(AlbumDiffC
         } else {
             // Set a placeholder or default image
             holder.binding.imageViewAlbum.setImageResource(R.drawable.ic_launcher_background)
+        }
+        holder.itemView.setOnClickListener {
+            albumClickListener(album.name)
         }
 
     }

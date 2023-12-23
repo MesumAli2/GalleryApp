@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +12,16 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.common.Constant
+import com.mesum.galleryapp.common.Constant.permissions
 import com.mesum.galleryapp.common.Constant.readExternal
 import com.mesum.galleryapp.databinding.FragmentAlbumsBinding
 import com.mesum.galleryapp.ui.adapter.AlbumAdapter
@@ -37,7 +37,7 @@ class AlbumsFragment : Fragment() {
     private var _binding: FragmentAlbumsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AlbumsViewModel by viewModels()
-    private val albumAdapter = AlbumAdapter()
+    private val albumAdapter = AlbumAdapter{ navigateToMediaFragment(it) }
 
     private val videoImagesPermission=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissionMap->
         if (permissionMap.all { it.value }){
@@ -70,18 +70,7 @@ class AlbumsFragment : Fragment() {
         setupRecyclerView()
         observeAlbums()
 
-         val readImagePermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-             Manifest.permission.READ_MEDIA_IMAGES
-             Manifest.permission.READ_MEDIA_VIDEO
-         }
-        else
-            Manifest.permission.READ_EXTERNAL_STORAGE
 
-        if(ContextCompat.checkSelfPermission(requireContext(), readImagePermission) == PackageManager.PERMISSION_GRANTED)
-        {
-            viewModel.loadAlbums()
-//permission granted
-        }
     }
 
     private fun setupRecyclerView() {
@@ -109,18 +98,17 @@ class AlbumsFragment : Fragment() {
     }
 
     private fun requestPermissions(){
-        //check the API level
+        //checks the API level
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             //filter permissions array in order to get permissions that have not been granted
             val notGrantedPermissions=Constant.permissions.filterNot { permission->
                 ContextCompat.checkSelfPermission(requireActivity(),permission) == PackageManager.PERMISSION_GRANTED
             }
             if (notGrantedPermissions.isNotEmpty()){
-                //check if permission was previously denied and return a boolean value
+                //checks if permission was previously denied and return a boolean value
                 val showRationale=notGrantedPermissions.any { permission->
                     shouldShowRequestPermissionRationale(permission)
                 }
-                //if true, explain to user why granting this permission is important
                 if (showRationale){
                     AlertDialog.Builder(requireActivity())
                         .setTitle("Storage Permission")
@@ -134,14 +122,12 @@ class AlbumsFragment : Fragment() {
                         }
                         .show()
                 }else{
-                    //launch the videoPermission ActivityResultContract
                     videoImagesPermission.launch(notGrantedPermissions.toTypedArray())
                 }
             }else{
                 Toast.makeText(activity, "Read media storage permission granted", Toast.LENGTH_SHORT).show()
             }
         }else{
-            //check if permission is granted
             if (ContextCompat.checkSelfPermission(requireActivity(),Constant.readExternal) == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(activity, "Read external storage permission granted", Toast.LENGTH_SHORT).show()
             }else{
@@ -164,4 +150,9 @@ class AlbumsFragment : Fragment() {
         }
     }
 
+    private fun navigateToMediaFragment(albumId: String) {
+        // Navigation logic to MediaFragment
+        val action = AlbumsFragmentDirections.actionAlbumsFragmentToMediaFragment(albumId)
+        findNavController().navigate(action)
+    }
 }

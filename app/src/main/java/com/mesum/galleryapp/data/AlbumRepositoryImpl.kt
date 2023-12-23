@@ -20,7 +20,7 @@ class AlbumRepositoryImpl : AlbumRepository {
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursor = context.contentResolver.query(uri, projection, null, null, null)
 
-        val albumMap = mutableMapOf<String, Pair<Uri?, Int>>()
+        val albumMap = mutableMapOf<String, Triple<String, Uri?, Int>>()
 
         cursor?.use {
             val albumNameColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
@@ -33,19 +33,20 @@ class AlbumRepositoryImpl : AlbumRepository {
                 val imageId = it.getLong(imageIdColumn)
                 val imageUri = Uri.withAppendedPath(uri, imageId.toString())
 
-                val count = albumMap[albumId]?.second?.plus(1) ?: 1
-                albumMap[albumId] = Pair(imageUri, count)
+                val albumInfo = albumMap[albumId]
+                if (albumInfo == null) {
+                    albumMap[albumId] = Triple(albumName, imageUri, 1)
+                } else {
+                    val newCount = albumInfo.third + 1
+                    albumMap[albumId] = Triple(albumName, albumInfo.second ?: imageUri, newCount)
+                }
             }
         }
 
-        albumMap.entries.forEach { entry ->
-            val albumName = entry.key
-            val firstImageUri = entry.value.first
-            val count = entry.value.second
-            albums.add(Album(albumName, firstImageUri, count))
+        albumMap.values.forEach { (name, firstImageUri, count) ->
+            albums.add(Album(name, firstImageUri, count))
         }
 
         return albums
     }
 }
-

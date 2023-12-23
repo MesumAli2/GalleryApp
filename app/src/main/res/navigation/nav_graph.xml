@@ -9,5 +9,18 @@
         android:id="@+id/albumsFragment"
         android:name="com.mesum.galleryapp.ui.AlbumsFragment"
         android:label="fragment_albums_"
-        tools:layout="@layout/fragment_albums_" />
+        tools:layout="@layout/fragment_albums_" >
+        <action
+            android:id="@+id/action_albumsFragment_to_mediaFragment"
+            app:destination="@id/mediaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.mesum.galleryapp.ui.MediaFragment"
+        android:label="MediaFragment" >
+        <argument
+            android:name="albumId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
