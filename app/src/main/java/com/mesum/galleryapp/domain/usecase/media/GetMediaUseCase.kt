@@ -1,4 +1,4 @@
-package com.mesum.galleryapp.domain.usecase
+package com.mesum.galleryapp.domain.usecase.media
 
 import com.mesum.galleryapp.data.MediaItem
 import com.mesum.galleryapp.domain.repository.MediaRepository

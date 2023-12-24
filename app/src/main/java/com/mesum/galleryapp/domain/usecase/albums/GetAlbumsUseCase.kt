@@ -1,4 +1,4 @@
-package com.mesum.galleryapp.domain.usecase
+package com.mesum.galleryapp.domain.usecase.albums
 
 import android.content.Context
 import com.mesum.galleryapp.data.Album

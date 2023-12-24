@@ -6,6 +6,6 @@ import com.mesum.galleryapp.data.MediaItem
 
 interface AlbumRepository {
     fun loadAlbums(context: Context): List<Album>
-    fun loadAllPictures(context: Context): List<MediaItem>
-    fun loadAllVideos(context: Context): List<MediaItem>
+
+
 }

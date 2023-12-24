@@ -1,14 +1,14 @@
 package com.mesum.galleryapp.di
 
 import android.content.Context
-import com.mesum.galleryapp.data.AlbumRepositoryImpl
-import com.mesum.galleryapp.data.MediaRepositoryImpl
+import com.mesum.galleryapp.data.repository.AlbumRepositoryImpl
+import com.mesum.galleryapp.data.repository.MediaRepositoryImpl
 import com.mesum.galleryapp.domain.repository.AlbumRepository
 import com.mesum.galleryapp.domain.repository.MediaRepository
-import com.mesum.galleryapp.domain.usecase.GetAlbumsUseCase
-import com.mesum.galleryapp.domain.usecase.GetAllPhotosUseCase
-import com.mesum.galleryapp.domain.usecase.GetAllVideosUseCase
-import com.mesum.galleryapp.domain.usecase.GetMediaUseCase
+import com.mesum.galleryapp.domain.usecase.albums.GetAlbumsUseCase
+import com.mesum.galleryapp.domain.usecase.media.GetAllPhotosUseCase
+import com.mesum.galleryapp.domain.usecase.media.GetAllVideosUseCase
+import com.mesum.galleryapp.domain.usecase.media.GetMediaUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,18 +27,7 @@ object AppModule {
     }
     @Singleton
     @Provides
-    fun provideAllPhotosUseCase(albumRepository: AlbumRepository): GetAllPhotosUseCase{
-        return GetAllPhotosUseCase(albumRepository)
-    }
-    @Singleton
-    @Provides
-    fun provideAllVideosUseCase(albumRepository: AlbumRepository): GetAllVideosUseCase{
-        return GetAllVideosUseCase(albumRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAlbumUseCase(albumRepository: AlbumRepository): GetAlbumsUseCase{
+    fun provideAlbumUseCase(albumRepository: AlbumRepository): GetAlbumsUseCase {
         return GetAlbumsUseCase(albumRepository)
     }
 
@@ -47,10 +36,22 @@ object AppModule {
         return MediaRepositoryImpl(context)
     }
 
+    @Singleton
+    @Provides
+    fun provideAllPhotosUseCase(mediaRepository: MediaRepository): GetAllPhotosUseCase {
+        return GetAllPhotosUseCase(mediaRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideAllVideosUseCase(mediaRepository: MediaRepository): GetAllVideosUseCase {
+        return GetAllVideosUseCase(mediaRepository)
+    }
+
     @Provides
     fun provideGetMediaUseCase(mediaRepository: MediaRepository): GetMediaUseCase {
         return GetMediaUseCase(mediaRepository)
     }
+
 
 
 

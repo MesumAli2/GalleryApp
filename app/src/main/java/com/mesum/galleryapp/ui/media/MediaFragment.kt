@@ -1,4 +1,4 @@
-package com.mesum.galleryapp.ui
+package com.mesum.galleryapp.ui.media
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.R
 import com.mesum.galleryapp.databinding.FragmentMediaBinding
-import com.mesum.galleryapp.ui.adapter.MediaAdapter
-import com.mesum.galleryapp.ui.viewmodel.MediaViewModel
+import com.mesum.galleryapp.common.GridSpacingItemDecoration
+import com.mesum.galleryapp.ui.media.adapter.MediaAdapter
+import com.mesum.galleryapp.ui.media.viewmodel.MediaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

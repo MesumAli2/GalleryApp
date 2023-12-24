@@ -1,4 +1,4 @@
-package com.mesum.galleryapp.ui
+package com.mesum.galleryapp.common
 
 import android.graphics.Rect
 import android.view.View

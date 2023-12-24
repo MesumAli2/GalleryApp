@@ -1,6 +1,5 @@
-package com.mesum.galleryapp.ui
+package com.mesum.galleryapp.ui.Albums
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -21,11 +20,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.common.Constant
-import com.mesum.galleryapp.common.Constant.permissions
 import com.mesum.galleryapp.common.Constant.readExternal
 import com.mesum.galleryapp.databinding.FragmentAlbumsBinding
-import com.mesum.galleryapp.ui.adapter.AlbumAdapter
-import com.mesum.galleryapp.ui.viewmodel.AlbumsViewModel
+import com.mesum.galleryapp.ui.Albums.adapter.AlbumAdapter
+import com.mesum.galleryapp.ui.Albums.viewmodel.AlbumsViewModel
 
 
 import dagger.hilt.android.AndroidEntryPoint

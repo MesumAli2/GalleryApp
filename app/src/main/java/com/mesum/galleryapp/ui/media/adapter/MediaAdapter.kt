@@ -1,4 +1,4 @@
-package com.mesum.galleryapp.ui.adapter
+package com.mesum.galleryapp.ui.media.adapter
 
 import android.net.Uri
 import android.view.LayoutInflater

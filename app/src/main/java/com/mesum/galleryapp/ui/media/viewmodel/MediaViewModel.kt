@@ -1,13 +1,13 @@
-package com.mesum.galleryapp.ui.viewmodel
+package com.mesum.galleryapp.ui.media.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mesum.galleryapp.common.Constant
 import com.mesum.galleryapp.data.MediaItem
-import com.mesum.galleryapp.domain.usecase.GetAllPhotosUseCase
-import com.mesum.galleryapp.domain.usecase.GetAllVideosUseCase
-import com.mesum.galleryapp.domain.usecase.GetMediaUseCase
+import com.mesum.galleryapp.domain.usecase.media.GetAllPhotosUseCase
+import com.mesum.galleryapp.domain.usecase.media.GetAllVideosUseCase
+import com.mesum.galleryapp.domain.usecase.media.GetMediaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
