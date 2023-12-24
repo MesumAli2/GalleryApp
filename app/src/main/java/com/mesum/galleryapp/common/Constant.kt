@@ -10,4 +10,6 @@ object Constant{
     val permissions = arrayOf(
         readVideo, readImages
     )
+    val allPhotos = "All Photos"
+    val allVideos = "All Videos"
 }
