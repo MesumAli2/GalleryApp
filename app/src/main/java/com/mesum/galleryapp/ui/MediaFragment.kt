@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.R
 import com.mesum.galleryapp.databinding.FragmentMediaBinding
@@ -52,9 +53,13 @@ class MediaFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        val spanCount = 2 // Adjust this value based on your needs and screen size
+        val layoutManager = GridLayoutManager(context, spanCount)
+        binding.mediaRecyclerView.layoutManager = layoutManager
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_spacing)
+        binding.mediaRecyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacingInPixels, true))
         mediaAdapter = MediaAdapter() // Initialize with empty list
         binding.mediaRecyclerView.adapter = mediaAdapter
-        binding.mediaRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     private fun loadMedia() {

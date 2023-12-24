@@ -1,6 +1,7 @@
 package com.mesum.galleryapp.data
 
 
+import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
@@ -49,5 +50,42 @@ class AlbumRepositoryImpl : AlbumRepository {
         }
 
         return albums
+    }
+
+    override fun loadAllPictures(context: Context): List<MediaItem> {
+        return loadMedia(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    }
+
+    override fun loadAllVideos(context: Context): List<MediaItem> {
+        return loadMedia(context, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+    }
+
+    private fun loadMedia(context: Context, contentUri: Uri): List<MediaItem> {
+        val mediaList = mutableListOf<MediaItem>()
+
+        val projection = arrayOf(
+            MediaStore.MediaColumns._ID,
+            MediaStore.MediaColumns.DISPLAY_NAME
+        )
+
+        context.contentResolver.query(
+            contentUri,
+            projection,
+            null,
+            null,
+            null
+        )?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
+
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idColumn)
+                val name = cursor.getString(nameColumn)
+                val mediaUri = ContentUris.withAppendedId(contentUri, id)
+                mediaList.add(MediaItem(mediaUri, name))
+            }
+        }
+
+        return mediaList
     }
 }
