@@ -52,6 +52,30 @@ class AlbumRepositoryImpl : AlbumRepository {
         return albums
     }
 
+    fun loadAllPicturesAlbums(context: Context): Album?{
+        val projection = arrayOf(
+            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
+            MediaStore.Images.Media.BUCKET_ID,
+            MediaStore.Images.Media._ID
+        )
+        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
+        val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+        var album : Album? = null
+        context.contentResolver.query(contentUri, projection, null, null, sortOrder)?.use {
+            val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            val nameColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+            while (it.moveToNext()){
+                val id = it.getLong(idColumn)
+                val name = it.getString(nameColumn)
+                val mediaUri = ContentUris.withAppendedId(contentUri, id)
+
+            }
+
+        }
+        return album
+
+    }
     override fun loadAllPictures(context: Context): List<MediaItem> {
         return loadMedia(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     }
@@ -67,13 +91,14 @@ class AlbumRepositoryImpl : AlbumRepository {
             MediaStore.MediaColumns._ID,
             MediaStore.MediaColumns.DISPLAY_NAME
         )
+        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
 
         context.contentResolver.query(
             contentUri,
             projection,
             null,
             null,
-            null
+            sortOrder
         )?.use { cursor ->
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
             val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)

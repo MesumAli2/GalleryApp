@@ -29,10 +29,10 @@ class MediaViewModel @Inject constructor(
         viewModelScope.launch {
             when(albumId){
                 Constant.allPhotos ->{
-                  _state.value =  getAllPhotosUseCase.invoke(context).reversed()
+                  _state.value =  getAllPhotosUseCase.invoke(context)
                 }
                 Constant.allVideos ->{
-                    _state.value =  getAllVideosUseCase.invoke(context).reversed()
+                    _state.value =  getAllVideosUseCase.invoke(context)
 
                 }
                 else -> {

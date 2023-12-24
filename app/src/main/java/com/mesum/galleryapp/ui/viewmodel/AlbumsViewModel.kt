@@ -34,8 +34,8 @@ class AlbumsViewModel @Inject constructor(private val application: Application,p
 
              val specialCategories = listOf(
                  Album(Constant.allPhotos, Constant.allPhotos,
-                     photos.last().uri, photos.size),
-                 Album(Constant.allVideos ,Constant.allVideos,videos.last().uri, videos.size)
+                     photos.first().uri, photos.size),
+                 Album(Constant.allVideos ,Constant.allVideos,videos.first().uri, videos.size)
 
              )
              _albums.value = specialCategories + albumList
