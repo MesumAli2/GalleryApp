@@ -4,6 +4,40 @@
 
 This Custom Gallery App is an Android application that efficiently organizes and displays images and videos stored on the device. The app provides a user-friendly interface for browsing media files grouped into albums based on their folder locations. Special emphasis is placed on ease of navigation and intuitive album categorization.
 
+## Clean Architecture Implementation
+
+The app's architecture is structured into layers, each with a distinct role, facilitating easy maintenance and testing.
+
+### Layers
+
+1. **Presentation Layer**: Contains UI components and ViewModels.
+2. **Domain Layer**: Includes use cases and domain models.
+3. **Data Layer**: Comprises repositories and data sources.
+
+### Key Classes
+
+- **Presentation Layer**:
+  - `AlbumsFragment`: Displays the list of albums.
+  - `MediaFragment`: Shows media contents of a selected album.
+  - `AlbumViewModel`: Manages the UI logic for the `AlbumsFragment`.
+  - `MediaViewModel`: Manages the UI logic for the `MediaFragment`.
+
+- **Domain Layer**:
+  - `Album`: Represents the domain model for an album.
+  - `MediaItem`: Represents individual media items (images/videos).
+  - `GetAlbumsUseCase`: Encapsulates the logic to fetch albums.
+  - `GetMediaUseCase`: Encapsulates the logic to fetch media items for a given album.
+
+- **Data Layer**:
+  - `AlbumRepository`: Interface defining the operations for fetching albums.
+  - `MediaRepository`: Interface defining the operations for fetching media items.
+  - `AlbumRepositoryImpl`: Implementation of `AlbumRepository`, interacts with MediaStore.
+  - `MediaRepositoryImpl`: Implementation of `MediaRepository`, also interacts with MediaStore.
+
+### Dependency Injection
+
+- The app uses Hilt for dependency injection, ensuring that dependencies are provided to the classes that need them, such as ViewModels, Repositories, and Use Cases.
+
 ## Features
 
 1. **Album View**: The app features an album view that organizes media files based on their folder locations on the device. For instance, media files in the "Screenshots" folder will be grouped under the "Screenshots" album.
