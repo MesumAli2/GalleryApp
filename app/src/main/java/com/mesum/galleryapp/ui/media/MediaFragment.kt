@@ -68,29 +68,27 @@ class MediaFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val spanCount = 2 // Adjust this value based on your needs and screen size
-        val layoutManager = GridLayoutManager(context, spanCount)
-        binding.mediaRecyclerView.layoutManager = layoutManager
-        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_spacing)
-        binding.mediaRecyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacingInPixels, true))
-        mediaAdapter = MediaAdapter() // Initialize with empty list
-        binding.mediaRecyclerView.adapter = mediaAdapter
+        binding.mediaRecyclerView.apply {
+            val spanCount = 2 // Number of columns in the grid
+            val spacing = 16 // Spacing in pixels
+            val includeEdge = true
+            layoutManager = GridLayoutManager(context, spanCount)
+             addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+            mediaAdapter = MediaAdapter()
+            binding.mediaRecyclerView.adapter = mediaAdapter
+        }
 
-        // Ensure the RecyclerView's layout behavior is set for scrolling
-        val layoutParams = binding.mediaRecyclerView.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.behavior = AppBarLayout.ScrollingViewBehavior()
     }
 
 
     private fun loadMedia() {
-        // Load media items for the selected album and update adapter
         viewModel.getMedia(selectedAlbumId)
     }
     private fun setupToolbar(selectedAlbumName: String) {
         (activity as? AppCompatActivity)?.supportActionBar?.apply {
-            title = selectedAlbumName // Set action bar title
-            setDisplayHomeAsUpEnabled(true) // Enable the Up button
-            setDisplayShowHomeEnabled(true) // Show the Up button
+            title = selectedAlbumName
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
 
         }
     }

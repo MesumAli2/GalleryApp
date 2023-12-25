@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@drawable/album_item_border"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <!-- Image of the Album -->
-        <ImageView
-            android:id="@+id/imageViewAlbum"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background" /> <!-- Replace with a placeholder or binding logic -->
+    <ImageView
+        android:id="@+id/imageViewAlbum"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
-        <!-- Album Name -->
-        <TextView
-            android:id="@+id/textViewAlbumName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Album Name"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/imageViewAlbum"
-            app:layout_constraintTop_toTopOf="@id/imageViewAlbum"
-            app:layout_constraintBottom_toBottomOf="@id/imageViewAlbum"
-            app:layout_constraintEnd_toStartOf="@id/textViewAlbumCount" />
+    <TextView
+        android:id="@+id/textViewAlbumName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/album_name"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewAlbum"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Total Photos Count -->
-        <TextView
-            android:id="@+id/textViewAlbumCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="99"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/textViewAlbumName"
-            app:layout_constraintTop_toTopOf="@id/imageViewAlbum"
-            app:layout_constraintBottom_toBottomOf="@id/imageViewAlbum"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Total Photos Count -->
+    <TextView
+        android:id="@+id/textViewAlbumCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/_99"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewAlbumName"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

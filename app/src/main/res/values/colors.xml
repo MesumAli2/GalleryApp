@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <color name="colorPrimary">#5C6BC0</color>
-        <color name="colorPrimaryDark">#3949AB</color>
-        <color name="colorAccent">#FF4081</color>
-        <color name="toolbarTextColor">#FFFFFF</color>
-    </resources>
+<resources>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="toolbarTextColor">#FFFFFF</color>
+    <color name="colorAccent">#CDDC39</color>
+
+
+    <!-- ... Dark Theme ... -->
+    <color name="colorPrimaryDarkTheme">#2E7D32</color>
+    <color name="colorPrimaryVariantDarkTheme">#1B5E20</color>
+    <color name="colorOnPrimaryDarkTheme">#FFFFFF</color>
+    <color name="colorSecondaryDarkTheme">#CDDC39</color>
+
+</resources>
+
 

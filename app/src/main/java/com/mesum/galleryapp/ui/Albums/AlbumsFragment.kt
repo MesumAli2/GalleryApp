@@ -19,10 +19,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.R
 import com.mesum.galleryapp.common.Constant
 import com.mesum.galleryapp.common.Constant.readExternal
+import com.mesum.galleryapp.common.GridSpacingItemDecoration
 import com.mesum.galleryapp.databinding.FragmentAlbumsBinding
 import com.mesum.galleryapp.ui.Albums.adapter.AlbumAdapter
 import com.mesum.galleryapp.ui.Albums.viewmodel.AlbumsViewModel
@@ -77,9 +79,12 @@ class AlbumsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.albumsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            val spanCount = 2 // Number of columns in the grid
+            val spacing = 16 // Spacing in pixels
+            val includeEdge = true
+             layoutManager = GridLayoutManager(context, spanCount)
+             addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
             adapter = albumAdapter
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
     }
 

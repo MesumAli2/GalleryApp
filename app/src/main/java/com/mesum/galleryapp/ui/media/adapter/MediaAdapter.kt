@@ -13,13 +13,15 @@ class MediaAdapter() : RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
     private var mediaList: List<MediaItem> = emptyList()
     class MediaViewHolder(val binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(mediaItem: MediaItem) {
-            // Assuming MediaItem has a Uri or path for the image
+            val displayMetrics = binding.root.context.resources.displayMetrics
+            val halfScreenHeight = displayMetrics.heightPixels / 3
+            binding.imageViewMedia.layoutParams.height = halfScreenHeight
             Glide.with(binding.imageViewMedia.context)
                 .load(mediaItem.uri)
                 .into(binding.imageViewMedia)
-            // Set other views in the item as needed
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaViewHolder {
         val inflater = LayoutInflater.from(parent.context)
