@@ -63,7 +63,7 @@ class AlbumsFragment : Fragment() {
         requestPermissions()
         setupRecyclerView()
         observeAlbums()
-       setupToolbar()
+        setupToolbar()
 
 
     }
