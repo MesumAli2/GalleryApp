@@ -18,9 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.R
 import com.mesum.galleryapp.common.Constant
 import com.mesum.galleryapp.common.Constant.readExternal
@@ -44,20 +42,13 @@ class AlbumsFragment : Fragment() {
 
     private val videoImagesPermission=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissionMap->
         if (permissionMap.all { it.value }){
-            Toast.makeText(activity, "Media permissions granted", Toast.LENGTH_SHORT).show()
             viewModel.loadAlbums()
-        }else{
-            Toast.makeText(activity, "Media permissions not granted!", Toast.LENGTH_SHORT).show()
         }
     }
-    //register a permissions activity launcher for a single permission
     private val readExternalPermission=registerForActivityResult(ActivityResultContracts.RequestPermission()){isGranted->
         if (isGranted){
-            Toast.makeText(activity, "Read external storage permission granted", Toast.LENGTH_SHORT).show()
             viewModel.loadAlbums()
 
-        }else{
-            Toast.makeText(activity, "Read external storage permission denied!", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -79,8 +70,8 @@ class AlbumsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.albumsRecyclerView.apply {
-            val spanCount = 2 // Number of columns in the grid
-            val spacing = 16 // Spacing in pixels
+            val spanCount = 2
+            val spacing = 16
             val includeEdge = true
              layoutManager = GridLayoutManager(context, spanCount)
              addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
@@ -107,7 +98,6 @@ class AlbumsFragment : Fragment() {
     private fun requestPermissions(){
         //checks the API level
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            //filter permissions array in order to get permissions that have not been granted
             val notGrantedPermissions=Constant.permissions.filterNot { permission->
                 ContextCompat.checkSelfPermission(requireActivity(),permission) == PackageManager.PERMISSION_GRANTED
             }
@@ -116,37 +106,31 @@ class AlbumsFragment : Fragment() {
                 val showRationale=notGrantedPermissions.any { permission->
                     shouldShowRequestPermissionRationale(permission)
                 }
-                if (showRationale){
-                    AlertDialog.Builder(requireActivity())
-                        .setTitle("Storage Permission")
-                        .setMessage("Storage permission is needed in order to show images and videos")
-                        .setNegativeButton("Cancel"){dialog,_->
-                            Toast.makeText(activity, "Read media storage permission denied!", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
-                        }
-                        .setPositiveButton("OK"){_,_->
-                            videoImagesPermission.launch(notGrantedPermissions.toTypedArray())
-                        }
-                        .show()
-                }else{
-                    videoImagesPermission.launch(notGrantedPermissions.toTypedArray())
-                }
-            }else{
-                Toast.makeText(activity, "Read media storage permission granted", Toast.LENGTH_SHORT).show()
+                if (showRationale) AlertDialog.Builder(requireActivity())
+                    .setTitle(getString(R.string.storage_permission))
+                    .setMessage(getString(R.string.message))
+                    .setNegativeButton(getString(R.string.cancel)){ dialog, _->
+                        Toast.makeText(activity,
+                            getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton(getString(R.string.ok)){ _, _->
+                        videoImagesPermission.launch(notGrantedPermissions.toTypedArray())
+                    }
+                    .show() else videoImagesPermission.launch(notGrantedPermissions.toTypedArray())
             }
         }else{
-            if (ContextCompat.checkSelfPermission(requireActivity(),Constant.readExternal) == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(activity, "Read external storage permission granted", Toast.LENGTH_SHORT).show()
-            }else{
+            if (ContextCompat.checkSelfPermission(requireActivity(),Constant.readExternal) != PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(Constant.readExternal)){
                     AlertDialog.Builder(requireActivity())
-                        .setTitle("Storage Permission")
-                        .setMessage("Storage permission is needed in order to show images and video")
-                        .setNegativeButton("Cancel"){dialog,_->
-                            Toast.makeText(activity, "Read external storage permission denied!", Toast.LENGTH_SHORT).show()
+                        .setTitle(getString(R.string.storage_permission))
+                        .setMessage(getString(R.string.message))
+                        .setNegativeButton(getString(R.string.cancel)){ dialog, _->
+                            Toast.makeText(activity,
+                                getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                             dialog.dismiss()
                         }
-                        .setPositiveButton("OK"){_,_->
+                        .setPositiveButton(getString(R.string.ok)){_,_->
                             readExternalPermission.launch(readExternal)
                         }
                         .show()
@@ -158,15 +142,11 @@ class AlbumsFragment : Fragment() {
     }
 
     private fun navigateToMediaFragment(albumId: String, albumName: String) {
-        // Navigation logic to MediaFragment
         val action = AlbumsFragmentDirections.actionAlbumsFragmentToMediaFragment(albumId, albumName)
         findNavController().navigate(action)
     }
 
     private fun setupToolbar() {
-
         (activity as AppCompatActivity).supportActionBar?.apply { title = getString(R.string.title) }
-
-
     }
 }

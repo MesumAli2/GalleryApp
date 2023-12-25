@@ -5,4 +5,9 @@
     <string name="title">Gallery</string>
     <string name="album_name">Album Name</string>
     <string name="_99">99</string>
+    <string name="storage_permission">Storage Permission</string>
+    <string name="message">Storage permission is needed in order to show images and videos</string>
+    <string name="cancel">Cancel</string>
+    <string name="permission_denied">Read media storage permission denied!</string>
+    <string name="ok">OK</string>
 </resources>

@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? =null
     private val binding get() = _binding!!
-    //register a permissions activity launcher for multiple permissions
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
@@ -41,8 +40,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(this,navController)
         appBarConfiguration = AppBarConfiguration.Builder(navController.graph)
             .build()
-
-
 
     }
 

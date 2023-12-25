@@ -26,14 +26,11 @@ class AlbumAdapter(private val albumClickListener: (String, String) -> Unit) : L
         val album = getItem(position)
         holder.binding.textViewAlbumName.text = album.name
         holder.binding.textViewAlbumCount.text = album.mediaCount.toString()
-        // Load the first image of the album as before
         if (album.firstImageUri != null) {
-            // Use your preferred image loading library (like Glide or Coil) here:
             Glide.with(holder.binding.imageViewAlbum.context)
                 .load(album.firstImageUri)
                 .into(holder.binding.imageViewAlbum)
         } else {
-            // Set a placeholder or default image
             holder.binding.imageViewAlbum.setImageResource(R.drawable.ic_launcher_background)
         }
         holder.itemView.setOnClickListener {
