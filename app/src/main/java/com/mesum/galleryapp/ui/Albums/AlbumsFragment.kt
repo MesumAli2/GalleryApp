@@ -5,6 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -19,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mesum.galleryapp.R
 import com.mesum.galleryapp.common.Constant
 import com.mesum.galleryapp.common.Constant.readExternal
@@ -35,6 +39,7 @@ import kotlinx.coroutines.launch
 class AlbumsFragment : Fragment() {
 
     private var _binding: FragmentAlbumsBinding? = null
+    private var isGridLayoutManager = true
     private val binding get() = _binding!!
     private val viewModel: AlbumsViewModel by viewModels()
     private val albumAdapter = AlbumAdapter{ id, albumName ->
@@ -51,11 +56,31 @@ class AlbumsFragment : Fragment() {
 
         }
     }
-
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_switch_layout, menu)
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAlbumsBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true) // Enable options menu in this fragment
+
         return binding.root
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_switch_layout -> {
+                toggleLayout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    private fun toggleLayout() {
+        isGridLayoutManager = !isGridLayoutManager
+        setupRecyclerView()
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,16 +93,24 @@ class AlbumsFragment : Fragment() {
 
     }
 
+
     private fun setupRecyclerView() {
         binding.albumsRecyclerView.apply {
-            val spanCount = 2
             val spacing = 16
             val includeEdge = true
-             layoutManager = GridLayoutManager(context, spanCount)
-             addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+            if (isGridLayoutManager) {
+                val spanCount = 2
+                layoutManager = GridLayoutManager(context, spanCount)
+                addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+            } else {
+                layoutManager = LinearLayoutManager(context)
+                // If needed, add a different item decoration for linear layout
+
+            }
             adapter = albumAdapter
         }
     }
+
 
     private fun observeAlbums() {
         lifecycleScope.launch {
