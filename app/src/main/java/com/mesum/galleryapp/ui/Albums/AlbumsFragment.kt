@@ -78,7 +78,8 @@ class AlbumsFragment : Fragment() {
 
     private fun toggleLayout() {
         isGridLayoutManager = !isGridLayoutManager
-        setupRecyclerView()
+        albumAdapter.isGridLayoutManager = isGridLayoutManager
+        setupRecyclerView() // Re-setup the RecyclerView with new layout manager
     }
 
 
