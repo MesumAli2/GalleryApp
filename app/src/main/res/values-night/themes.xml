@@ -4,5 +4,9 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryVariantDarkTheme</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryDarkTheme</item>
         <item name="colorSecondary">@color/colorSecondaryDarkTheme</item>
+        <item name="myBackgroundDrawable">@drawable/bg_dark</item>
+
     </style>
+
+
 </resources>
