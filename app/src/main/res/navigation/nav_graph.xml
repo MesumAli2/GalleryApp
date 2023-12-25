@@ -22,5 +22,10 @@
             android:name="albumId"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="albumName"
+            app:argType="string"
+            app:nullable="true"
+            />
     </fragment>
 </navigation>

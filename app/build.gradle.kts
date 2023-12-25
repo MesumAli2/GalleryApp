@@ -41,7 +41,10 @@ android {
     buildFeatures{
         viewBinding = true
     }
+
+
 }
+
 
 dependencies {
 
@@ -65,7 +68,6 @@ dependencies {
     //  navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
-
 
     implementation("com.google.dagger:hilt-android:2.45")
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")

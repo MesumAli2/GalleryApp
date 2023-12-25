@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.mesum.galleryapp.R
 
-class AlbumAdapter(private val albumClickListener: (String) -> Unit) : ListAdapter<Album, AlbumAdapter.AlbumViewHolder>(
+class AlbumAdapter(private val albumClickListener: (String, String) -> Unit) : ListAdapter<Album, AlbumAdapter.AlbumViewHolder>(
     AlbumDiffCallback()
 ) {
 
@@ -37,7 +37,7 @@ class AlbumAdapter(private val albumClickListener: (String) -> Unit) : ListAdapt
             holder.binding.imageViewAlbum.setImageResource(R.drawable.ic_launcher_background)
         }
         holder.itemView.setOnClickListener {
-            albumClickListener(album.id)
+            albumClickListener(album.id, album.name)
         }
 
     }

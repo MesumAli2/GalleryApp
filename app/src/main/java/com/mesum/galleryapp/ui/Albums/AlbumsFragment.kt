@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,6 +20,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mesum.galleryapp.R
 import com.mesum.galleryapp.common.Constant
 import com.mesum.galleryapp.common.Constant.readExternal
 import com.mesum.galleryapp.databinding.FragmentAlbumsBinding
@@ -35,7 +37,8 @@ class AlbumsFragment : Fragment() {
     private var _binding: FragmentAlbumsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AlbumsViewModel by viewModels()
-    private val albumAdapter = AlbumAdapter{ navigateToMediaFragment(it) }
+    private val albumAdapter = AlbumAdapter{ id, albumName ->
+        navigateToMediaFragment(id, albumName) }
 
     private val videoImagesPermission=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissionMap->
         if (permissionMap.all { it.value }){
@@ -67,6 +70,7 @@ class AlbumsFragment : Fragment() {
         requestPermissions()
         setupRecyclerView()
         observeAlbums()
+       setupToolbar()
 
 
     }
@@ -148,9 +152,16 @@ class AlbumsFragment : Fragment() {
         }
     }
 
-    private fun navigateToMediaFragment(albumId: String) {
+    private fun navigateToMediaFragment(albumId: String, albumName: String) {
         // Navigation logic to MediaFragment
-        val action = AlbumsFragmentDirections.actionAlbumsFragmentToMediaFragment(albumId)
+        val action = AlbumsFragmentDirections.actionAlbumsFragmentToMediaFragment(albumId, albumName)
         findNavController().navigate(action)
+    }
+
+    private fun setupToolbar() {
+
+        (activity as AppCompatActivity).supportActionBar?.apply { title = getString(R.string.title) }
+
+
     }
 }
