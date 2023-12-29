@@ -70,10 +70,3 @@ The app's architecture is structured into layers, each with a distinct role, fac
 
 - **Navigation Component**: The app leverages Android's Navigation Component for handling in-app navigation, providing a consistent and predictable navigation experience.
 
-## Additional Notes
-
-- The app requires runtime permissions to access external storage. Users will be prompted to grant these permissions upon first launch.
-- Special attention is given to handling various media types and formats, ensuring broad compatibility with device media files.
-- The app has been designed with scalability in mind, allowing for future enhancements such as additional media types, cloud integration, and advanced media management features.
-
----
